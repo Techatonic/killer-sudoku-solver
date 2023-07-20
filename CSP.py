@@ -1,11 +1,7 @@
-import collections
-import copy
-import pprint
-
 from Cage import parse_cage, Cage
 from Cell import Cell
 from helper import generate_killer_combinations
-from constraint import Constraint, Variable, Domain, AllDifferentConstraint, Problem, ExactSumConstraint
+from constraint import AllDifferentConstraint, Problem, ExactSumConstraint
 
 combinations = generate_killer_combinations()
 
@@ -119,4 +115,5 @@ class Sudoku:
             self.board[cell.row][cell.col] = cell
 
         # self.print_board()
+
         return True
