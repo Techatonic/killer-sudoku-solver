@@ -5,6 +5,7 @@ import json
 from more_itertools import grouper
 
 from CSP import Sudoku
+from sudokuViewer import view_sudoku
 
 
 def run_file(filename):
