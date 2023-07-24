@@ -1,0 +1,9 @@
+constraint==0.4.1
+firebase_admin==6.2.0
+more_itertools==8.10.0
+mss==9.0.1
+Pillow==10.0.0
+PyAutoGUI==0.9.54
+pyscreenshot==3.1
+python_constraint==1.4.0
+reportlab==3.6.8

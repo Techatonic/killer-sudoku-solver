@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 /sudoku-27fa4-firebase-adminsdk-x9h3m-d0db95065b.json
+/sudoku_key_pair.pem
