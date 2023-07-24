@@ -5,8 +5,6 @@ import json
 from more_itertools import grouper
 
 from CSP import Sudoku
-from sudokuViewer import view_sudoku
-
 
 def run_file(filename):
     file_path = "./sudokus/" + filename
@@ -29,15 +27,14 @@ def run_file(filename):
 
 
 def run_through_directory(files):
-    for file in files:
+    #for file in files:
+    for file in files[:100]:
         filename = os.fsdecode(file)
         print(f'filename: {filename}')
         if filename.endswith(".json"):
             run_file(filename)
         else:
             continue
-        # # TODO Remove this
-        # break
 
 
 if __name__ == '__main__':

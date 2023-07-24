@@ -4,6 +4,7 @@ import os
 import time
 import tkinter as tk
 
+import pyautogui as pyautogui
 from PIL import Image, ImageGrab
 import mss.tools
 
@@ -139,9 +140,10 @@ def create_killer_sudoku_gui(root, sudoku, filename):
 
     create_sudoku_grid(canvas)
     draw_killer_cages(canvas)
+    return canvas
 
 
-def take_screenshot(filename):
+def take_screenshot(filename, canvas):
     # save window as image
     directory = './sudoku_imgs/'
     filename = directory + filename
@@ -153,27 +155,35 @@ def take_screenshot(filename):
 
         # The screen part to capture
         monitor = {
-            "top": mon["top"] + 75,  # 100px from the top
-            "left": mon["left"] + 38,  # 100px from the left
+            "top": mon["top"] + 0,  # 100px from the top
+            "left": mon["left"] + 479,  # 100px from the left
             "width": 722,
             "height": 722,
             "mon": monitor_number,
         }
+
         img = sct.grab(monitor)
         mss.tools.to_png(img.rgb, img.size, output=filename + '.png')
+
+    # x, y = canvas.winfo_rootx(), canvas.winfo_rooty()
+    # w, h = canvas.winfo_width(), canvas.winfo_height()
+    # pyautogui.screenshot(filename+'.png', region=(x, y, w, h))
+
 
 
 
 def show_sudoku(sudoku, filename):
     root = tk.Tk()
+    root.attributes("-fullscreen", True)
     root.title("Killer Sudoku GUI")
 
     # Load the JSON data and pass it to the GUI function
-    create_killer_sudoku_gui(root, sudoku, filename)
+    canvas = create_killer_sudoku_gui(root, sudoku, filename)
 
     root.update()
-    root.after(500, take_screenshot, filename)
-    root.after(1000, root.destroy)
+    if not os.path.exists(filename + '.png'):
+        root.after(1000, take_screenshot, filename, canvas)
+        root.after(2000, root.destroy)
 
     root.mainloop()
 
@@ -182,7 +192,7 @@ def view_sudokus():
     # Show all sudokus in folder
     directory = os.fsencode("./confirmed_sudokus/")
     files = os.listdir(directory)
-    for _file in files:
+    for i, _file in enumerate(files):
         filename = os.fsdecode(_file)
         print(f'filename: {filename}')
 
@@ -192,8 +202,9 @@ def view_sudokus():
 
         sudoku = Sudoku(data['grid'], data['cages'], data['filledGrid'])
 
-        show_sudoku(sudoku, filename)
-        # break
+        show_sudoku(sudoku, filename.rstrip('.json'))
+        # if i == 1:
+        #     break
 
 
 view_sudokus()
